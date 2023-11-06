@@ -22,11 +22,34 @@ public class SanPhamService {
         listSanPham.add(new SanPham("SP2", "Ten 2", 120, "Nhập khẩu"));
         listSanPham.add(new SanPham("SP3", "Ten 3", 150, "Xuất khẩu"));
         listSanPham.add(new SanPham("SP4", "Ten 4", 160, "Xuất khẩu"));
-        listSanPham.add(new SanPham("SP5", "Ten 5", 170, "Nhập khẩu"));
+        listSanPham.add(new SanPham("SP5", "An 5", 170, "Nhập khẩu"));
     }
 
     public List<SanPham> getAll() {
         return listSanPham;
     }
 
+    public void removeSanPham(int index) {
+        listSanPham.remove(index);
+    }
+
+    public void addSanPham(SanPham sp) {
+        listSanPham.add(sp);
+    }
+
+    public void updateSanPham(int index, SanPham newSP) {
+        listSanPham.set(index, newSP);
+    }
+
+    // Sort => su lamda expression (->)
+    public void sapXep() {
+        // Sap xep String (Chuoi )=> compareTo
+//        listSanPham.sort((o1, o2) -> {
+//            return o1.getTen().compareTo(o2.getTen()); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/LambdaBody
+//        });
+        // Sap xep so (int )=> dau - 
+        listSanPham.sort((o1, o2) -> {
+            return o1.getKhoiluong() - o2.getKhoiluong(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/LambdaBody
+        });
+    }
 }

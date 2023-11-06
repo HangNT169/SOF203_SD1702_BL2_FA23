@@ -15,11 +15,11 @@ import javax.swing.table.DefaultTableModel;
  * @author hangnt
  */
 public class ViewSanPham extends javax.swing.JFrame {
-    
-    private List<SanPham>lists = new ArrayList<>();
+
+    private List<SanPham> lists = new ArrayList<>();
     private DefaultTableModel dtm = new DefaultTableModel();
     private SanPhamService service = new SanPhamService();
-    
+
     /**
      * Creates new form ViewSanPham
      */
@@ -31,16 +31,17 @@ public class ViewSanPham extends javax.swing.JFrame {
         dtm = (DefaultTableModel) tblHienThi.getModel();
         showDataTable(lists);
     }
-    
-    public void showDataTable(List<SanPham>listSP){
+
+    // Muon table hien thi du lieu => goi show datatable
+    public void showDataTable(List<SanPham> listSP) {
         dtm.setRowCount(0); // Xoa toan bo du lieu hien tai tren table
         for (SanPham sanPham : listSP) {
-           dtm.addRow(new Object[]{
-               sanPham.getMaSanPham(),
-               sanPham.getTen(),
-               sanPham.getKhoiluong(),
-               sanPham.getLoaiSP()
-           });
+            dtm.addRow(new Object[]{
+                sanPham.getMaSanPham(),
+                sanPham.getTen(),
+                sanPham.getKhoiluong(),
+                sanPham.getLoaiSP()
+            });
         }
     }
 
@@ -98,14 +99,39 @@ public class ViewSanPham extends javax.swing.JFrame {
         cbbLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhập khẩu", "Xuất khẩu" }));
 
         btnThem.setText("Them");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnXoa.setText("Xoa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         btnSua.setText("Sua");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnSapXep.setText("Sap xep");
+        btnSapXep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSapXepActionPerformed(evt);
+            }
+        });
 
         btnThoat.setText("Thoat");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
 
         tblHienThi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -118,9 +144,19 @@ public class ViewSanPham extends javax.swing.JFrame {
                 "Mã SP", "Tên SP", "Khối lượng", "Loại SP"
             }
         ));
+        tblHienThi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblHienThiMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblHienThi);
 
         btnClear.setText("Clear Form");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,17 +169,10 @@ public class ViewSanPham extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(btnThem)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtMaSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel5)
                                 .addComponent(jLabel6))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(9, 9, 9)
-                                    .addComponent(txtKhoiLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -154,12 +183,20 @@ public class ViewSanPham extends javax.swing.JFrame {
                                     .addGap(45, 45, 45)
                                     .addComponent(btnSapXep)
                                     .addGap(18, 18, 18)
-                                    .addComponent(btnThoat))))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtTenSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane2)))
+                                    .addComponent(btnThoat))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(9, 9, 9)
+                                    .addComponent(txtKhoiLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtTenSanPham))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtMaSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -178,18 +215,19 @@ public class ViewSanPham extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtKhoiLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtKhoiLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cbbLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnThem)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnXoa)
-                    .addComponent(btnSua)
-                    .addComponent(btnSapXep)
-                    .addComponent(btnThoat))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnThem)
+                        .addComponent(btnSua)
+                        .addComponent(btnSapXep)
+                        .addComponent(btnThoat)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -197,6 +235,68 @@ public class ViewSanPham extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblHienThiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHienThiMouseClicked
+        // B1: Lấy ra dòng đang được chọn trên table
+        int row = tblHienThi.getSelectedRow();
+        // B2: Lấy ra giá trị của đối tượng
+        SanPham sp = lists.get(row);
+        // B3: Set giá trị tương ứng vào các ô text field
+        txtMaSanPham.setText(sp.getMaSanPham());
+        txtTenSanPham.setText(sp.getTen());
+        // Ep kieu int => String 
+        // C1: Them "" o cuoi 
+//        txtKhoiLuong.setText(sp.getKhoiluong()+"");
+        // C2: Ep kieu tuong minh
+        txtKhoiLuong.setText(String.valueOf(sp.getKhoiluong()));
+        cbbLoai.setSelectedItem(sp.getLoaiSP());
+    }//GEN-LAST:event_tblHienThiMouseClicked
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        int row = tblHienThi.getSelectedRow();
+        service.removeSanPham(row);
+        showDataTable(lists);
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        service.addSanPham(getFormData());
+        showDataTable(lists);
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        int row = tblHienThi.getSelectedRow();
+        service.updateSanPham(row, getFormData());
+        showDataTable(lists);
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+//        System.exit(0); // tat toan bo chuong trinh
+        this.dispose(); // tat cai jframe hien tai 
+    }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        txtMaSanPham.setText("");
+        // Tuong tu 
+        cbbLoai.setSelectedIndex(0);
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnSapXepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSapXepActionPerformed
+        service.sapXep();
+        showDataTable(lists);
+    }//GEN-LAST:event_btnSapXepActionPerformed
+
+    // Lay toan bo du lieu tren form 
+    public SanPham getFormData() {
+        // B1: Lay du lieu tu form 
+        String maSP = txtMaSanPham.getText();
+        String tenSP = txtTenSanPham.getText();
+        String khoiLuong = txtKhoiLuong.getText();
+        String loaiSP = (String) cbbLoai.getSelectedItem();
+        // B2: Khoi tao doi tuong
+        // Ep kieu String => int
+        SanPham sp = new SanPham(maSP, tenSP, Integer.valueOf(khoiLuong), loaiSP);
+        return sp;
+    }
 
     /**
      * @param args the command line arguments
