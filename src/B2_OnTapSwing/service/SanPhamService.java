@@ -33,8 +33,13 @@ public class SanPhamService {
         listSanPham.remove(index);
     }
 
-    public void addSanPham(SanPham sp) {
+    public String addSanPham(SanPham sp) {
+        // Check cai doi tuong null
+        if (sp == null) {
+            return "Add that bai";
+        }
         listSanPham.add(sp);
+        return "Add thanh cong";
     }
 
     public void updateSanPham(int index, SanPham newSP) {
@@ -51,5 +56,18 @@ public class SanPhamService {
         listSanPham.sort((o1, o2) -> {
             return o1.getKhoiluong() - o2.getKhoiluong(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/LambdaBody
         });
+    }
+    
+    public List<SanPham>searchTheoTen(String ten){
+        List<SanPham> listSearch = new ArrayList<>();
+        // Code 
+        for (SanPham sp : listSanPham) {
+            // Check chua ten 
+            if(sp.getTen().contains(ten)){
+                // add vao list search
+                listSearch.add(sp);
+            }
+        }
+        return listSearch;
     }
 }
