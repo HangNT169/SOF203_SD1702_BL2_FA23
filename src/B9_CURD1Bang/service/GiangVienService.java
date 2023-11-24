@@ -20,4 +20,8 @@ public class GiangVienService {
     public List<GiangVien> getAll() {
         return repo.getAll();
     }
+
+    public boolean add(GiangVien gv) {
+        return repo.add(gv);
+    }
 }
